@@ -4,7 +4,7 @@
 
 ## Anotações
 
-Como criar um projeto do zero com expo bucket:
+Como criar um projeto do zero com expo bucket: principais comandos
 
 - `npx create-expo-app my-app`
 - `npm install native-base`
@@ -16,6 +16,8 @@ Como criar um projeto do zero com expo bucket:
 - `npm install @react-navigation/stack`
 - `npm install phosphor-react-native`
 - `npm install react-native-svg-transformer --save-dev`
+
+- `eas build --profile preview --platform android`
 
 - `https://docs.nativebase.io/setup-provider`
 - `https://github.com/kristerkari/react-native-svg-transformer`
