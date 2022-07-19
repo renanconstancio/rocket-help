@@ -11,10 +11,12 @@ export function Details() {
   const { orderId } = route.params as RouteParams;
 
   return (
-    <VStack flex={1} pb={6} bg="gray.700">
-      <Header title="Solicitação" />
+    <VStack flex={1} pb={6} bg={"gray.700"}>
+      <Header title="Solicitações" />
 
-      <Text color={"white"}>{orderId}</Text>
+      <Text color={"white"} p={6}>
+        {orderId}
+      </Text>
     </VStack>
   );
 }

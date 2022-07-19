@@ -61,12 +61,12 @@ export function Home() {
   }
 
   return (
-    <VStack flex={1} pb={6} bg="gray.700">
+    <VStack flex={1} pb={6} bg={"gray.700"}>
       <HStack
-        w="full"
-        justifyContent="space-between"
-        alignItems="center"
-        bg="gray.600"
+        w={"full"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        bg={"gray.600"}
         pt={12}
         pb={5}
         px={6}
@@ -77,20 +77,20 @@ export function Home() {
       </HStack>
 
       <VStack flex={1} px={6}>
-        <HStack w="full" mt={8} mb={4} justifyContent="space-between">
-          <Heading color="gray.100">Meus Chamados</Heading>
-          <Text color="gray.200">{orders.length ?? 0}</Text>
+        <HStack w={"full"} mt={8} mb={4} justifyContent={"space-between"}>
+          <Heading color={"gray.100"}>Meus Chamados</Heading>
+          <Text color={"gray.200"}>{orders.length ?? 0}</Text>
         </HStack>
         <HStack space={3} mb={8}>
           <Filter
-            type="open"
-            title="em andamento"
+            type={"open"}
+            title={"em andamento"}
             onPress={() => setStatusSelected("open")}
             isActive={statusSelected === "open"}
           />
           <Filter
-            type="closed"
-            title="finalizados"
+            type={"closed"}
+            title={"finalizados"}
             onPress={() => setStatusSelected("closed")}
             isActive={statusSelected === "closed"}
           />
@@ -108,9 +108,9 @@ export function Home() {
             <Center>
               <ChatTeardropText color={colors.gray[300]} size={40} />
               <Text
+                mt={6}
                 color={"gray.300"}
                 fontSize={"xl"}
-                mt={6}
                 textAlign={"center"}
               >
                 Você ainda não possui {"\n"}
@@ -121,7 +121,7 @@ export function Home() {
           )}
         />
 
-        <Button title="Nova solicitação" onPress={handleNewOrder} />
+        <Button title={"Nova solicitação"} onPress={handleNewOrder} />
       </VStack>
     </VStack>
   );

@@ -34,6 +34,7 @@ export function Header({ title, ...rest }: Props) {
       <IconButton
         icon={<CaretLeft color={colors.gray[200]} size={24} />}
         onPress={handleGoBack}
+        ml={2}
       />
 
       <Heading
@@ -41,7 +42,7 @@ export function Header({ title, ...rest }: Props) {
         textAlign={"center"}
         fontSize={"lg"}
         flex={1}
-        ml={-6}
+        ml={-16}
       >
         {title}
       </Heading>
