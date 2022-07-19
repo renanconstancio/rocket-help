@@ -4,7 +4,7 @@
     "slug": "rocket-help",
     "version": "1.0.1",
     "splash": {
-      "image": "./assets/icon.png",
+      "image": "./src/assets/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#996DFF"
     },
