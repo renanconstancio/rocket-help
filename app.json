@@ -1,8 +1,13 @@
 {
   "expo": {
-    "name": "rocket-help",
+    "name": "Rocket-Help Solicitações",
     "slug": "rocket-help",
-    "version": "1.0.0",
+    "version": "1.0.1",
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#996DFF"
+    },
     "assetBundlePatterns": [
       "**/*"
     ]
