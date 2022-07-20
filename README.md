@@ -18,6 +18,7 @@ Como criar um projeto do zero com expo bucket: principais comandos
 - `npm install react-native-svg-transformer --save-dev`
 
 - `eas build --profile preview --platform android`
+- `expo prebuild`
 
 - `https://docs.nativebase.io/setup-provider`
 - `https://github.com/kristerkari/react-native-svg-transformer`
