@@ -17,7 +17,7 @@ export function SignIn() {
   const { colors } = useTheme();
 
   function handleSignIn() {
-    if (!email || password) {
+    if (!email || !password) {
       return Alert.alert("Entrar", "Informe e-mail e senha");
     }
 
