@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Alert } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import {
   Center,
   FlatList,
@@ -10,43 +12,23 @@ import {
   VStack,
 } from "native-base";
 import { ChatTeardropText, SignOut } from "phosphor-react-native";
+import auth from "@react-native-firebase/auth";
+import firestore from "@react-native-firebase/firestore";
 
-import Logo from "../assets/logo_secondary.svg";
 import { Filter } from "../components/Filter";
 import { Button } from "../components/Button";
 import { Order, OrderProps } from "../components/Order";
-import { useNavigation } from "@react-navigation/native";
+
+import Logo from "../assets/logo_secondary.svg";
+import { dateFormat } from "../utils/firestoreDateFormat";
+import { Loading } from "../components/Loading";
 
 export function Home() {
+  const [isLoading, setIsLoding] = useState(true);
   const [statusSelected, setStatusSelected] = useState<"open" | "closed">(
     "open"
   );
-  const [orders, setOrders] = useState<OrderProps[]>([
-    {
-      id: "asdf",
-      patrimony: "Impressora Loja A",
-      when: "18/07/2022 às 10:00",
-      status: "open",
-    },
-    {
-      id: "bsdf",
-      patrimony: "Impressora Loja B",
-      when: "18/07/2022 às 10:00",
-      status: "open",
-    },
-    {
-      id: "csdf",
-      patrimony: "Impressora Loja C",
-      when: "18/07/2022 às 10:00",
-      status: "closed",
-    },
-    {
-      id: "gsdf",
-      patrimony: "Impressora Loja C",
-      when: "18/07/2022 às 10:00",
-      status: "closed",
-    },
-  ]);
+  const [orders, setOrders] = useState<OrderProps[]>([]);
 
   const navigation = useNavigation();
 
@@ -59,6 +41,41 @@ export function Home() {
   function handleOpenDetails(orderId: string) {
     navigation.navigate("details", { orderId });
   }
+
+  function handleLogout() {
+    auth()
+      .signOut()
+      .catch((error) => {
+        console.log(error);
+        return Alert.alert("Sair", "Não foi possível sair?\nTente novamente.");
+      });
+  }
+
+  useEffect(() => {
+    setIsLoding(true);
+
+    const subscriber = firestore()
+      .collection("orders")
+      .where("status", "==", statusSelected)
+      .onSnapshot((snapshot) => {
+        const data = snapshot.docs.map((doc) => {
+          const { patrimony, description, status, created_at } = doc.data();
+
+          return {
+            id: doc.id,
+            patrimony,
+            description,
+            status,
+            when: dateFormat(created_at),
+          };
+        });
+
+        setOrders(data);
+        setIsLoding(false);
+      });
+
+    return subscriber;
+  }, [statusSelected]);
 
   return (
     <VStack flex={1} pb={6} bg={"gray.700"}>
@@ -73,7 +90,10 @@ export function Home() {
       >
         <Logo />
 
-        <IconButton icon={<SignOut size={26} color={colors.gray[300]} />} />
+        <IconButton
+          icon={<SignOut size={26} color={colors.gray[300]} />}
+          onPress={handleLogout}
+        />
       </HStack>
 
       <VStack flex={1} px={6}>
@@ -95,31 +115,34 @@ export function Home() {
             isActive={statusSelected === "closed"}
           />
         </HStack>
-
-        <FlatList
-          data={orders}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <Order data={item} onPress={() => handleOpenDetails(item.id)} />
-          )}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 50 }}
-          ListEmptyComponent={() => (
-            <Center>
-              <ChatTeardropText color={colors.gray[300]} size={40} />
-              <Text
-                mt={6}
-                color={"gray.300"}
-                fontSize={"xl"}
-                textAlign={"center"}
-              >
-                Você ainda não possui {"\n"}
-                solicitações{" "}
-                {statusSelected === "open" ? "em andamento" : "finlizados"}
-              </Text>
-            </Center>
-          )}
-        />
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <FlatList
+            data={orders}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <Order data={item} onPress={() => handleOpenDetails(item.id)} />
+            )}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 50 }}
+            ListEmptyComponent={() => (
+              <Center>
+                <ChatTeardropText color={colors.gray[300]} size={40} />
+                <Text
+                  mt={6}
+                  color={"gray.300"}
+                  fontSize={"xl"}
+                  textAlign={"center"}
+                >
+                  Você ainda não possui {"\n"}
+                  solicitações{" "}
+                  {statusSelected === "open" ? "em andamento" : "finlizados"}
+                </Text>
+              </Center>
+            )}
+          />
+        )}
 
         <Button title={"Nova solicitação"} onPress={handleNewOrder} />
       </VStack>
