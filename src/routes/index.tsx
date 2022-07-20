@@ -14,7 +14,7 @@ export function Routes() {
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged((resp) => {
       setUser(resp);
-      if (loading) setIsLoading(false);
+      setIsLoading(false);
     });
 
     return subscriber;
