@@ -19,7 +19,7 @@ export function CardDetails({
 }: Props) {
   const { colors } = useTheme();
   return (
-    <VStack bg={"gray.600"} p={5} rounded={"sm"}>
+    <VStack bg={"gray.600"} p={5} rounded={"sm"} mt={3}>
       <HStack alignItems={"center"} mb={4}>
         <Icon color={colors.primary[700]} />
         <Text
@@ -31,6 +31,7 @@ export function CardDetails({
           {title}
         </Text>
       </HStack>
+
       {!!description && (
         <Text color={"gray.300"} fontSize={"md"}>
           {description}

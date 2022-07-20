@@ -24,7 +24,7 @@ export function SignIn() {
     setIsLoading(true);
 
     auth()
-      .signInWithEmailAndPassword(email, password)
+      .signInWithEmailAndPassword(email.trim(), password.trim())
       .catch((error) => {
         console.log(error);
         setIsLoading(false);
@@ -54,6 +54,7 @@ export function SignIn() {
         InputLeftElement={
           <Icon as={<Envelope color={colors.gray[300]} />} ml={4} />
         }
+        keyboardType={"email-address"}
         onChangeText={setEmail}
       />
 

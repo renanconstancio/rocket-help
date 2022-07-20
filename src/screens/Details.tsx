@@ -58,6 +58,7 @@ export function Details() {
       })
       .then(() => {
         Alert.alert("Solicitação", "Solicitação finalizada e encerrada.");
+        navigation.goBack();
       })
       .catch((error) => {
         console.log(error);
