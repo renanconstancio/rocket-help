@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { IconProps } from "phosphor-react-native";
-import { VStack, HStack, Text, Box, useTheme, Icon } from "native-base";
+import { VStack, HStack, Text, Box, useTheme } from "native-base";
 
 type Props = {
   title: string;
@@ -30,23 +30,22 @@ export function CardDetails({
         >
           {title}
         </Text>
-
-        {!!description && (
-          <Text color={"gray.300"} fontSize={"md"}>
-            {description}
-          </Text>
-        )}
-
-        {children}
-
-        {!!footer && (
-          <Box borderTopWidth={1} borderTopColor={"gray.400"} mt={3}>
-            <Text mt={3} color={"gray.300"} fontSize={"sm"}>
-              {footer}
-            </Text>
-          </Box>
-        )}
       </HStack>
+      {!!description && (
+        <Text color={"gray.300"} fontSize={"md"}>
+          {description}
+        </Text>
+      )}
+
+      {children}
+
+      {!!footer && (
+        <Box borderTopWidth={1} borderTopColor={"gray.400"} mt={3}>
+          <Text mt={3} color={"gray.300"} fontSize={"sm"}>
+            {footer}
+          </Text>
+        </Box>
+      )}
     </VStack>
   );
 }
