@@ -15,14 +15,14 @@ export function Register() {
 
   const navigation = useNavigation();
 
-  function handleNewOrderRegister() {
+  async function handleNewOrderRegister() {
     if (!patrimony || !description) {
       return Alert.alert("Registrar", "Preencha todos os campos.");
     }
 
     setIsLoading(true);
 
-    firebase()
+    await firebase()
       .collection("orders")
       .add({
         patrimony,

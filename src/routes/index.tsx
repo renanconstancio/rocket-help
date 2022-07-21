@@ -12,7 +12,7 @@ export function Routes() {
   const [user, setUser] = useState<FirebaseAuthTypes.User>();
 
   useEffect(() => {
-    const subscriber = auth().onAuthStateChanged((resp) => {
+    const subscriber = auth().onAuthStateChanged(async (resp) => {
       setUser(resp);
       setIsLoading(false);
     });

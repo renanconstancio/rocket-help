@@ -40,7 +40,7 @@ export function Details() {
 
   const { orderId } = route.params as RouteParams;
 
-  function handleOrderClosed() {
+  async function handleOrderClosed() {
     if (!solution) {
       return Alert.alert(
         "Solicitação",
@@ -48,7 +48,7 @@ export function Details() {
       );
     }
 
-    firebase()
+    await firebase()
       .collection<OrderFirestoreDTO>("orders")
       .doc(orderId)
       .update({
@@ -74,7 +74,7 @@ export function Details() {
       .collection<OrderFirestoreDTO>("orders")
       .doc(orderId)
       .get()
-      .then((doc) => {
+      .then(async (doc) => {
         const {
           created_at,
           description,

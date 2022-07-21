@@ -16,14 +16,14 @@ export function SignIn() {
 
   const { colors } = useTheme();
 
-  function handleSignIn() {
+  async function handleSignIn() {
     if (!email || !password) {
       return Alert.alert("Entrar", "Informe e-mail e senha");
     }
 
     setIsLoading(true);
 
-    auth()
+    await auth()
       .signInWithEmailAndPassword(email.trim(), password.trim())
       .catch((error) => {
         console.log(error);

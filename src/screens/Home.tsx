@@ -42,8 +42,8 @@ export function Home() {
     navigation.navigate("details", { orderId });
   }
 
-  function handleLogout() {
-    auth()
+  async function handleLogout() {
+    await auth()
       .signOut()
       .catch((error) => {
         console.log(error);
