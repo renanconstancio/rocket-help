@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Alert } from "react-native";
 import { VStack, Heading, Icon, useTheme } from "native-base";
 import { Envelope, Key } from "phosphor-react-native";
-import auth from "@react-native-firebase/auth";
 
 import Logo from "./../assets/logo_primary.svg";
 
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
+import database from "../config/firebase";
 
 export function SignIn() {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +23,8 @@ export function SignIn() {
 
     setIsLoading(true);
 
-    auth()
+    database.app
+      .auth()
       .signInWithEmailAndPassword(email.trim(), password.trim())
       .catch((error) => {
         console.log(error);

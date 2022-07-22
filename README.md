@@ -8,6 +8,7 @@ Como criar um projeto do zero com expo bucket: principais comandos
 
 - `npx create-expo-app my-app`
 - `npm install native-base`
+- `expo install firebase@8.2.3`
 - `expo install expo-font @expo-google-fonts/name-font-family`
 - `expo install react-native-svg`
 - `expo install react-native-screens`

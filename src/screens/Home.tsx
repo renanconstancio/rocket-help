@@ -12,8 +12,6 @@ import {
   VStack,
 } from "native-base";
 import { ChatTeardropText, SignOut } from "phosphor-react-native";
-import auth from "@react-native-firebase/auth";
-import firestore from "@react-native-firebase/firestore";
 
 import { Filter } from "../components/Filter";
 import { Button } from "../components/Button";
@@ -22,6 +20,7 @@ import { Order, OrderProps } from "../components/Order";
 import Logo from "../assets/logo_secondary.svg";
 import { dateFormat } from "../utils/firestoreDateFormat";
 import { Loading } from "../components/Loading";
+import database from "../config/firebase";
 
 export function Home() {
   const [isLoading, setIsLoding] = useState(true);
@@ -43,7 +42,8 @@ export function Home() {
   }
 
   function handleLogout() {
-    auth()
+    database.app
+      .auth()
       .signOut()
       .catch((error) => {
         console.log(error);
@@ -54,7 +54,7 @@ export function Home() {
   useEffect(() => {
     setIsLoding(true);
 
-    const subscriber = firestore()
+    const subscriber = database
       .collection("orders")
       .where("status", "==", statusSelected)
       .onSnapshot((snapshot) => {

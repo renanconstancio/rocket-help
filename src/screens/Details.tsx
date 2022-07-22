@@ -4,7 +4,6 @@ import { Header } from "../components/Header";
 import { OrderProps } from "../components/Order";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import firebase from "@react-native-firebase/firestore";
 import { OrderFirestoreDTO } from "../DTOs/OrderFirestoreDTO";
 import { dateFormat } from "../utils/firestoreDateFormat";
 import { Loading } from "../components/Loading";
@@ -17,6 +16,7 @@ import {
 import { CardDetails } from "../components/CardDetails";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
+import database from "../config/firebase";
 
 type RouteParams = {
   orderId: string;
@@ -48,13 +48,13 @@ export function Details() {
       );
     }
 
-    firebase()
+    database
       .collection<OrderFirestoreDTO>("orders")
       .doc(orderId)
       .update({
         status: "closed",
         solution,
-        closed_at: firebase.FieldValue.serverTimestamp(),
+        closed_at: "",
       })
       .then(() => {
         Alert.alert("Solicitação", "Solicitação finalizada e encerrada.");
@@ -70,7 +70,7 @@ export function Details() {
   }
 
   useEffect(() => {
-    firebase()
+    database
       .collection<OrderFirestoreDTO>("orders")
       .doc(orderId)
       .get()

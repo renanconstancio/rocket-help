@@ -2,11 +2,11 @@ import { useState } from "react";
 import { VStack } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import { Alert } from "react-native";
-import firebase from "@react-native-firebase/firestore";
 
 import { Header } from "../components/Header";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
+import database from "../config/firebase";
 
 export function Register() {
   const [isLoading, setIsLoading] = useState(false);
@@ -22,13 +22,13 @@ export function Register() {
 
     setIsLoading(true);
 
-    firebase()
+    database
       .collection("orders")
       .add({
         patrimony,
         description,
         status: "open",
-        created_at: firebase.FieldValue.serverTimestamp(),
+        created_at: "",
       })
       .then(() => {
         Alert.alert("Solicitação", "Solicitação registrada com sucesso.");
