@@ -13,20 +13,15 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "plugins": [
-      "@react-native-firebase/app"
-    ],    
     "android": {
-      "package": "com.rockethelp",
-      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#996DFF"
-      }
+      },
+      "package": "com.renanexpo.rockethelp"
     },
     "ios": {
-      "bundleIdentifier": "com.rockethelp",
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "bundleIdentifier": "com.renanexpo.rockethelp"
     },
     "web": {
       "favicon": "./assets/favicon.png",
