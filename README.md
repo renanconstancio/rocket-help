@@ -18,6 +18,7 @@ Como criar um projeto do zero com expo bucket: principais comandos
 - `npm install phosphor-react-native`
 - `npm install react-native-svg-transformer --save-dev`
 
+- `eas build --platform android`
 - `eas build --profile preview --platform android`
 - `expo prebuild`
 
