@@ -29,21 +29,14 @@ export function Header({ title, ...rest }: Props) {
       bg={"gray.600"}
       pb={6}
       pt={12}
+      pl={6}
       {...rest}
     >
       <IconButton
-        icon={<CaretLeft color={colors.gray[200]} size={24} />}
+        icon={<CaretLeft color={colors.gray[200]} size={26} />}
         onPress={handleGoBack}
-        ml={2}
       />
-
-      <Heading
-        color={"gray.100"}
-        textAlign={"center"}
-        fontSize={"lg"}
-        flex={1}
-        ml={-16}
-      >
+      <Heading color={"gray.100"} textAlign={"left"} fontSize={"lg"} flex={1}>
         {title}
       </Heading>
     </HStack>

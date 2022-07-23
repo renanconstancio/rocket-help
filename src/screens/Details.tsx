@@ -49,7 +49,7 @@ export function Details() {
     }
 
     database
-      .collection<OrderFirestoreDTO>("orders")
+      .collection("orders")
       .doc(orderId)
       .update({
         status: "closed",
@@ -71,7 +71,7 @@ export function Details() {
 
   useEffect(() => {
     database
-      .collection<OrderFirestoreDTO>("orders")
+      .collection("orders")
       .doc(orderId)
       .get()
       .then((doc) => {
