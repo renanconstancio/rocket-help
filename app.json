@@ -2,7 +2,7 @@
   "expo": {
     "name": "Rocket-Help Solicitações",
     "slug": "rocket-help",
-    "version": "1.0.6",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
