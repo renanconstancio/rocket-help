@@ -22,11 +22,11 @@ type RouteParams = {
   orderId: string;
 };
 
-type OrderDetails = OrderProps & {
+type OrderDetails = {
   description: string;
   solution: string;
   closed: string;
-};
+} & OrderProps;
 
 export function Details() {
   const [isLoading, setIsLoadind] = useState(true);
