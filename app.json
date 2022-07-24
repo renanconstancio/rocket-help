@@ -22,6 +22,7 @@
       "package": "com.renanexpo.rockethelp"
     },
     "ios": {
+      "bundleIdentifier": "com.renanexpo.rockethelp"
     },
     "web": {
       "favicon": "./assets/favicon.png",
