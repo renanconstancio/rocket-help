@@ -16,7 +16,8 @@ import {
 import { CardDetails } from "../components/CardDetails";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
-import database from "../config/firebase";
+import { collection } from "firebase/firestore";
+import { database } from "../config/firebase";
 
 type RouteParams = {
   orderId: string;
@@ -48,56 +49,51 @@ export function Details() {
       );
     }
 
-    database
-      .collection("orders")
-      .doc(orderId)
-      .update({
-        status: "closed",
-        solution,
-        closed_at: "",
-      })
-      .then(() => {
-        Alert.alert("Solicitação", "Solicitação finalizada e encerrada.");
-        navigation.goBack();
-      })
-      .catch((error) => {
-        console.log(error);
-        Alert.alert(
-          "Solicitação",
-          "Não foi possível finalizada ou encerrar a solicitação.\nTente novamente mais tarde."
-        );
-      });
+    // collection(database, "orders", orderId)
+    //   .update({
+    //     status: "closed",
+    //     solution,
+    //     closed_at: "",
+    //   })
+    //   .then(() => {
+    //     Alert.alert("Solicitação", "Solicitação finalizada e encerrada.");
+    //     navigation.goBack();
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     Alert.alert(
+    //       "Solicitação",
+    //       "Não foi possível finalizada ou encerrar a solicitação.\nTente novamente mais tarde."
+    //     );
+    //   });
   }
 
   useEffect(() => {
-    database
-      .collection("orders")
-      .doc(orderId)
-      .get()
-      .then((doc) => {
-        const {
-          created_at,
-          description,
-          patrimony,
-          status,
-          closed_at,
-          solution,
-        } = doc.data();
-
-        const closed = closed_at ? dateFormat(closed_at) : null;
-
-        setOrder({
-          id: doc.id,
-          patrimony,
-          description,
-          status,
-          solution,
-          when: dateFormat(created_at),
-          closed,
-        });
-
-        setIsLoadind(false);
-      });
+    // database
+    //   .collection("orders")
+    //   .doc(orderId)
+    //   .get()
+    //   .then((doc) => {
+    //     const {
+    //       created_at,
+    //       description,
+    //       patrimony,
+    //       status,
+    //       closed_at,
+    //       solution,
+    //     } = doc.data();
+    //     const closed = closed_at ? dateFormat(closed_at) : null;
+    //     setOrder({
+    //       id: doc.id,
+    //       patrimony,
+    //       description,
+    //       status,
+    //       solution,
+    //       when: dateFormat(created_at),
+    //       closed,
+    //     });
+    //     setIsLoadind(false);
+    //   });
   }, []);
 
   if (isLoading) {

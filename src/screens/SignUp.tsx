@@ -7,7 +7,9 @@ import Logo from "./../assets/logo_primary.svg";
 
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
-import database from "../config/firebase";
+
+import { database } from "../config/firebase";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
 
 export function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,14 +19,14 @@ export function SignUp() {
 
   const { colors } = useTheme();
 
-  async function handleSignUp() {
+  function handleSignUp() {
     if (!email || !password) {
       return Alert.alert("Cadastrar", "Informe e-mail e senha");
     }
 
     setIsLoading(true);
 
-    await database.app
+    database.app
       .auth()
       .createUserWithEmailAndPassword(email.trim(), password.trim())
       .catch((error) => {

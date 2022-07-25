@@ -20,7 +20,9 @@ import { Order, OrderProps } from "../components/Order";
 import Logo from "../assets/logo_secondary.svg";
 import { dateFormat } from "../utils/firestoreDateFormat";
 import { Loading } from "../components/Loading";
-import database from "../config/firebase";
+
+import { getAuth, signOut } from "firebase/auth";
+import { getStorage, ref, listAll } from "firebase/storage";
 
 export function Home() {
   const [isLoading, setIsLoding] = useState(true);
@@ -42,39 +44,58 @@ export function Home() {
   }
 
   function handleLogout() {
-    database.app
-      .auth()
-      .signOut()
-      .catch((error) => {
-        console.log(error);
-        return Alert.alert("Sair", "Não foi possível sair?\nTente novamente.");
-      });
+    signOut(getAuth()).catch((error) => {
+      console.log(error);
+      return Alert.alert("Sair", "Não foi possível sair?\nTente novamente.");
+    });
   }
 
   useEffect(() => {
     setIsLoding(true);
 
-    const subscriber = database
-      .collection("orders")
-      .where("status", "==", statusSelected)
-      .onSnapshot((snapshot) => {
-        const data = snapshot.docs.map((doc) => {
-          const { patrimony, description, status, created_at } = doc.data();
+    listAll(ref(getStorage(), "orders"))
+      .then((res) => {
+        res.prefixes.forEach((folderRef) => {
+          // All the prefixes under listRef.
+          // You may call listAll() recursively on them.
+        });
+        res.items.forEach((itemRef) => {
+          const { patrimony, description, status, created_at } = itemRef;
 
           return {
-            id: doc.id,
+            id: "doc.id",
             patrimony,
             description,
             status,
             when: dateFormat(created_at),
           };
         });
-
-        setOrders(data);
-        setIsLoding(false);
+      })
+      .catch((error) => {
+        // Uh-oh, an error occurred!
       });
 
-    return subscriber;
+    // const storage = getStorage();
+    // const subscriber = collection("orders")
+    //   .where("status", "==", statusSelected)
+    //   .onSnapshot((snapshot) => {
+    //     const data = snapshot.docs.map((doc) => {
+    //       const { patrimony, description, status, created_at } = doc.data();
+
+    //       return {
+    //         id: doc.id,
+    //         patrimony,
+    //         description,
+    //         status,
+    //         when: dateFormat(created_at),
+    //       };
+    //     });
+
+    //     setOrders(data);
+    //     setIsLoding(false);
+    //   });
+
+    // return subscriber;
   }, [statusSelected]);
 
   return (

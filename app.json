@@ -5,6 +5,9 @@
     "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "packagerOpts": {
+      "sourceExts": ["cjs"]
+    },
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

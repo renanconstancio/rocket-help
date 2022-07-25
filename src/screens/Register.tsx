@@ -6,7 +6,9 @@ import { Alert } from "react-native";
 import { Header } from "../components/Header";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
-import database from "../config/firebase";
+
+import { database } from "../config/firebase";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
 
 export function Register() {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,21 +17,18 @@ export function Register() {
 
   const navigation = useNavigation();
 
-  function handleNewOrderRegister() {
+  async function handleNewOrderRegister() {
     if (!patrimony || !description) {
       return Alert.alert("Registrar", "Preencha todos os campos.");
     }
 
     setIsLoading(true);
-
-    database
-      .collection("orders")
-      .add({
-        patrimony,
-        description,
-        status: "open",
-        created_at: "",
-      })
+    await addDoc(collection(database, "orders"), {
+      patrimony,
+      description,
+      status: "open",
+      created_at: Timestamp.now(),
+    })
       .then(() => {
         Alert.alert("Solicitação", "Solicitação registrada com sucesso.");
         navigation.goBack();
