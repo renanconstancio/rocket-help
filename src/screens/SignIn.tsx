@@ -7,7 +7,9 @@ import Logo from "./../assets/logo_primary.svg";
 
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
-import database from "../config/firebase";
+
+import "../config/firebase";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export function SignIn() {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,10 +25,8 @@ export function SignIn() {
 
     setIsLoading(true);
 
-    database.app
-      .auth()
-      .signInWithEmailAndPassword(email.trim(), password.trim())
-      .catch((error) => {
+    signInWithEmailAndPassword(getAuth(), email.trim(), password.trim()).catch(
+      (error) => {
         console.log(error);
         setIsLoading(false);
 
@@ -38,7 +38,8 @@ export function SignIn() {
           default:
             return Alert.alert("Entrar", "Não foi possível acessar");
         }
-      });
+      }
+    );
   }
 
   return (

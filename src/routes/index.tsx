@@ -5,18 +5,20 @@ import { Loading } from "../components/Loading";
 import { SignIn } from "../screens/SignIn";
 import { AppRoutes } from "./app.routes";
 
-import database from "../config/firebase";
+import "../config/firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export function Routes() {
   const [loading, setIsLoading] = useState(true);
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    const subscriber = database.app.auth().onAuthStateChanged((resp) => {
-      setUser(resp);
-      setIsLoading(false);
-    });
-    return subscriber;
+    (async () => {
+      onAuthStateChanged(getAuth(), (resp) => {
+        setUser(resp);
+        setIsLoading(false);
+      });
+    })();
   }, []);
 
   if (loading) {

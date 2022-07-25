@@ -17,13 +17,9 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#996DFF"
-      },
-      "googleServicesFile": "./google-services.json",
-      "package": "com.renanexpo.rockethelp"
+      }
     },
-    "ios": {
-      "bundleIdentifier": "com.renanexpo.rockethelp"
-    },
+    "ios": {},
     "web": {
       "favicon": "./assets/favicon.png",
       "config": {
