@@ -22,7 +22,8 @@ import { dateFormat } from "../utils/firestoreDateFormat";
 import { Loading } from "../components/Loading";
 
 import { getAuth, signOut } from "firebase/auth";
-import { getStorage, ref, listAll } from "firebase/storage";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { database } from "../config/firebase";
 
 export function Home() {
   const [isLoading, setIsLoding] = useState(true);
@@ -53,49 +54,29 @@ export function Home() {
   useEffect(() => {
     setIsLoding(true);
 
-    listAll(ref(getStorage(), "orders"))
-      .then((res) => {
-        res.prefixes.forEach((folderRef) => {
-          // All the prefixes under listRef.
-          // You may call listAll() recursively on them.
-        });
-        res.items.forEach((itemRef) => {
-          const { patrimony, description, status, created_at } = itemRef;
+    (async () => {
+      const q = query(
+        collection(database, "orders"),
+        where("status", "==", statusSelected)
+      );
 
-          return {
-            id: "doc.id",
-            patrimony,
-            description,
-            status,
-            when: dateFormat(created_at),
-          };
-        });
-      })
-      .catch((error) => {
-        // Uh-oh, an error occurred!
+      const querySnapshot = await getDocs(q);
+      const data = querySnapshot.docs.map((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        // console.log(doc.id, " => ", doc.data());
+        const { patrimony, description, status, created_at } = doc.data();
+        return {
+          id: doc.id,
+          patrimony,
+          description,
+          status,
+          when: dateFormat(created_at),
+        };
       });
 
-    // const storage = getStorage();
-    // const subscriber = collection("orders")
-    //   .where("status", "==", statusSelected)
-    //   .onSnapshot((snapshot) => {
-    //     const data = snapshot.docs.map((doc) => {
-    //       const { patrimony, description, status, created_at } = doc.data();
-
-    //       return {
-    //         id: doc.id,
-    //         patrimony,
-    //         description,
-    //         status,
-    //         when: dateFormat(created_at),
-    //       };
-    //     });
-
-    //     setOrders(data);
-    //     setIsLoding(false);
-    //   });
-
-    // return subscriber;
+      setOrders(data);
+      setIsLoding(false);
+    })();
   }, [statusSelected]);
 
   return (

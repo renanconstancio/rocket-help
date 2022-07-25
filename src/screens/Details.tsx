@@ -16,7 +16,14 @@ import {
 import { CardDetails } from "../components/CardDetails";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
-import { collection } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  query,
+  Timestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { database } from "../config/firebase";
 
 type RouteParams = {
@@ -41,12 +48,23 @@ export function Details() {
 
   const { orderId } = route.params as RouteParams;
 
-  function handleOrderClosed() {
+  async function handleOrderClosed() {
     if (!solution) {
       return Alert.alert(
         "Solicitação",
         "Informe a solução para encerrar  a solicitação."
       );
+    }
+
+    const docSnap = doc(database, "orders", orderId);
+    if ((await getDoc(docSnap)).exists()) {
+      await updateDoc(docSnap, {
+        status: "closed",
+        solution,
+        closed_at: Timestamp.now(),
+      });
+      Alert.alert("Solicitação", "Solicitação finalizada e encerrada.");
+      navigation.goBack();
     }
 
     // collection(database, "orders", orderId)
@@ -55,10 +73,7 @@ export function Details() {
     //     solution,
     //     closed_at: "",
     //   })
-    //   .then(() => {
-    //     Alert.alert("Solicitação", "Solicitação finalizada e encerrada.");
-    //     navigation.goBack();
-    //   })
+    //   .then(() => {})
     //   .catch((error) => {
     //     console.log(error);
     //     Alert.alert(
@@ -69,31 +84,30 @@ export function Details() {
   }
 
   useEffect(() => {
-    // database
-    //   .collection("orders")
-    //   .doc(orderId)
-    //   .get()
-    //   .then((doc) => {
-    //     const {
-    //       created_at,
-    //       description,
-    //       patrimony,
-    //       status,
-    //       closed_at,
-    //       solution,
-    //     } = doc.data();
-    //     const closed = closed_at ? dateFormat(closed_at) : null;
-    //     setOrder({
-    //       id: doc.id,
-    //       patrimony,
-    //       description,
-    //       status,
-    //       solution,
-    //       when: dateFormat(created_at),
-    //       closed,
-    //     });
-    //     setIsLoadind(false);
-    //   });
+    (async () => {
+      const docSnap = await getDoc(doc(database, "orders", orderId));
+      if (docSnap.exists()) {
+        const {
+          created_at,
+          description,
+          patrimony,
+          status,
+          closed_at,
+          solution,
+        } = docSnap.data();
+        const closed = closed_at ? dateFormat(closed_at) : null;
+        setOrder({
+          id: docSnap.id,
+          patrimony,
+          description,
+          status,
+          solution,
+          when: dateFormat(created_at),
+          closed,
+        });
+      }
+      setIsLoadind(false);
+    })();
   }, []);
 
   if (isLoading) {

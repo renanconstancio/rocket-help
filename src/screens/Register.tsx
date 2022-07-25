@@ -8,7 +8,7 @@ import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 
 import { database } from "../config/firebase";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc, Timestamp } from "firebase/firestore";
 
 export function Register() {
   const [isLoading, setIsLoading] = useState(false);
