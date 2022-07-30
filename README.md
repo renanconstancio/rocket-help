@@ -4,19 +4,29 @@
 
 Como criar um projeto do zero com expo bucket: principais comandos
 
-- ```bash
+```bash
+expo init
+```
+
+```bash
 npx create-expo-app my-app
 ```
-- `npm install native-base`
-- `expo install firebase@8.2.3`
-- `expo install expo-font @expo-google-fonts/name-font-family`
-- `expo install react-native-svg`
-- `expo install react-native-screens`
-- `expo install react-native-safe-area-context`
-- `npm install @react-navigation/native`
-- `npm install @react-navigation/stack`
-- `npm install phosphor-react-native`
-- `npm install react-native-svg-transformer --save-dev`
+
+```bash
+npm install native-base
+```
+
+```bash
+expo install firebase@8.2.3 expo-font @expo-google-fonts/name-font-family react-native-svg react-native-screens react-native-safe-area-context
+```
+
+```bash
+npm install @react-navigation/native @react-navigation/stack phosphor-react-native
+```
+
+```bash
+npm install react-native-svg-transformer --save-dev
+```
 
 - `eas build --platform android`
 - `eas build --profile preview --platform android`
