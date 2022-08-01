@@ -28,6 +28,13 @@ npm install @react-navigation/native @react-navigation/stack phosphor-react-nati
 npm install react-native-svg-transformer --save-dev
 ```
 
+Ajustar essas configurações
+
+```bash
+https://github.com/kristerkari/react-native-svg-transformer#step-3-configure-the-react-native-packager
+```
+
+
 - `eas build --platform android`
 - `eas build --profile preview --platform android`
 - `expo prebuild`
