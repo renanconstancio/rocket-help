@@ -93,7 +93,7 @@ export function Details() {
 
       <HStack bg={"gray.500"} justifyContent={"center"} p={4}>
         {order.status === "closed" ? (
-          <CircleWavyCheck size={22} color={colors.green[300]} />
+          <CircleWavyCheck size={22} color={colors.yellow[300]} />
         ) : (
           <Hourglass size={22} color={colors.secondary[700]} />
         )}
@@ -104,7 +104,7 @@ export function Details() {
           textTransform={"uppercase"}
           color={
             order.status === "closed"
-              ? colors.green[300]
+              ? colors.yellow[300]
               : colors.secondary[700]
           }
         >

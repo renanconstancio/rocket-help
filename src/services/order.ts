@@ -2,13 +2,15 @@ import {
   addDoc,
   collection,
   deleteDoc,
-  doc,
   getDocs,
   getDoc,
   setDoc,
   where,
   query,
+  orderBy,
+  doc,
 } from "firebase/firestore/lite";
+
 import { dateFormat } from "../utils/firestoreDateFormat";
 import { db } from "../providers/firebase";
 
@@ -30,6 +32,9 @@ export async function getOrders(status: string) {
         when: dateFormat(created_at),
       };
     });
+
+    console.log("orderData", orderData);
+
     return orderData;
   } catch (e) {
     console.log(e, "e");
@@ -68,9 +73,9 @@ export async function deleteOrder(id: string) {
 
 export async function addOrder(order) {
   try {
-    await addDoc(collection(db, "orders"), { ...order });
+    return await addDoc(collection(db, "orders"), { ...order });
   } catch (e) {
-    console.log(e, "e");
+    throw new Error(e);
   }
 }
 

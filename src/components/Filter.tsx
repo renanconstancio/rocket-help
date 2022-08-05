@@ -10,7 +10,7 @@ export function Filter({ title, isActive = false, type, ...rest }: Props) {
   const { colors } = useTheme();
 
   const colorsType =
-    type === "open" ? colors.secondary[700] : colors.green[300];
+    type === "open" ? colors.secondary[700] : colors.yellow[300];
 
   return (
     <Button

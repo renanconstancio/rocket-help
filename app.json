@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "my-app",
-    "slug": "my-app",
+    "name": "Agendamento de Unhas",
+    "slug": "angenda-unha",
     "version": "1.0.0",
     "splash": {
       "resizeMode": "contain",
-      "backgroundColor": "#996DFF"
+      "backgroundColor": "#efc054"
     },
     "assetBundlePatterns": [
       "**/*"
