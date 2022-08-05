@@ -13,15 +13,11 @@ npx create-expo-app my-app
 ```
 
 ```bash
-npm install native-base
-```
-
-```bash
 expo install firebase@8.2.3 expo-font @expo-google-fonts/name-font-family react-native-svg react-native-screens react-native-safe-area-context
 ```
 
 ```bash
-npm install @react-navigation/native @react-navigation/stack phosphor-react-native
+npm install native-base @react-navigation/native @react-navigation/stack @react-navigation/native-stack phosphor-react-native
 ```
 
 ```bash

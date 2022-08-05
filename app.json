@@ -3,6 +3,10 @@
     "name": "my-app",
     "slug": "my-app",
     "version": "1.0.0",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#996DFF"
+    },
     "assetBundlePatterns": [
       "**/*"
     ]
