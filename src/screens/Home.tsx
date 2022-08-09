@@ -22,6 +22,9 @@ import { getOrders } from "../services/order";
 import { getAuth, signOut } from "firebase/auth";
 
 import Logo from "../assets/logo_secondary.svg";
+import { dateFormat } from "../utils/firestoreDateFormat";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "../providers/firebase";
 
 export function Home() {
   const [isLoading, setIsLoding] = useState(true);
@@ -50,14 +53,31 @@ export function Home() {
   }
 
   useEffect(() => {
-    (async () => {
-      const subscriber = await getOrders(statusSelected).then(async resp => {
-        setOrders(resp);
-        setIsLoding(false);
+    const subscriber = onSnapshot(collection(db, "orders"), snapshot => {
+      const ordersSnap = snapshot.docs.map(doc => {
+        const { patrimony, description, status, created_at } = doc.data();
+        return {
+          id: doc.id,
+          patrimony,
+          description,
+          status,
+          when: dateFormat(created_at),
+        };
       });
-      return subscriber;
-    })();
+      setOrders(ordersSnap);
+    });
+    return subscriber;
+
+    // (async () => {
+    //   const subscriber = await getOrders(statusSelected).then(async resp => {
+    //     setOrders([]);
+    //     setIsLoding(false);
+    //   });
+    //   return subscriber;
+    // })();
   }, [statusSelected]);
+
+  console.log("orders", orders);
 
   return (
     <VStack flex={1} pb={6} bg={"gray.700"}>

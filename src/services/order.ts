@@ -33,7 +33,7 @@ export async function getOrders(status: string) {
       };
     });
 
-    console.log("orderData", orderData);
+    // console.log("orderData", orderData);
 
     return orderData;
   } catch (e) {
